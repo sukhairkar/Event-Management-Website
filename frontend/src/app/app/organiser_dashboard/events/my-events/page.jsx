@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import AnnouncementsSection from "./AnnouncementsSection";
+import { API_URL } from "@/lib/apiurl";
 
 export default function MyEvents() {
   const [events, setEvents] = useState([]);
@@ -13,7 +14,7 @@ export default function MyEvents() {
   const organiserId = "120ca15e-9e8a-418c-a6af-2155f76960ad";
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/organiser/events`)
+    fetch(`${API_URL}/organiser/events`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched events:", data);

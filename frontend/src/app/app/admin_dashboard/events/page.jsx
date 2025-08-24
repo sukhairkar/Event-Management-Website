@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { API_URL } from "@/lib/apiurl";
 
 export default function EventsPage() {
   const { user } = useUser();
@@ -13,7 +14,7 @@ export default function EventsPage() {
   const fetchPendingEvents = async () => {
     setLoadingEvents(true);
     try {
-      const res = await fetch("http://localhost:5000/api/admin/events/pending");
+      const res = await fetch(`${API_URL}/admin/events/pending`);
       const data = await res.json();
       setPendingEvents(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -28,7 +29,7 @@ export default function EventsPage() {
   }, []);
 
   const handleApprove = async (eventId) => {
-    await fetch("http://localhost:5000/api/admin/events/approve", {
+    await fetch(`${API_URL}/admin/events/approve`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ event_id: eventId }),
@@ -37,7 +38,7 @@ export default function EventsPage() {
   };
 
   const handleReject = async (eventId) => {
-    await fetch("http://localhost:5000/api/admin/events/reject", {
+    await fetch(`${API_URL}/admin/events/reject`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ event_id: eventId }),

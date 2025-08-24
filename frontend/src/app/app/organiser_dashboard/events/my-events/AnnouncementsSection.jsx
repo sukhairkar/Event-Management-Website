@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { API_URL } from "@/lib/apiurl";
 
 export default function AnnouncementsSection({ eventId, organiserId }) {
   const [announcements, setAnnouncements] = useState([]);
@@ -12,7 +13,7 @@ export default function AnnouncementsSection({ eventId, organiserId }) {
   const fetchAnnouncements = async () => {
     if (!eventId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/announcements/${eventId}`);
+      const res = await fetch(`${API_URL}/announcements/${eventId}`);
       const data = await res.json();
       if (data.announcements) setAnnouncements(data.announcements);
     } catch (err) {
@@ -32,7 +33,7 @@ export default function AnnouncementsSection({ eventId, organiserId }) {
     if (!title || !message) return alert("Title and message are required");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/announcements/`, {
+      const res = await fetch(`${API_URL}/announcements/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

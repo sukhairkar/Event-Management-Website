@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation"; // ✅ Import router
+import { API_URL } from "@/lib/apiurl";
 
 export default function OrganiserDashboard() {
   const { user } = useUser();
@@ -28,7 +29,7 @@ export default function OrganiserDashboard() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/organiser/events", {
+      const res = await fetch(`${API_URL}/organiser/events`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

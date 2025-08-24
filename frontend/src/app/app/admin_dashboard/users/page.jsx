@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { API_URL } from "@/lib/apiurl";
 
 export default function UsersPage() {
   const { user } = useUser();
@@ -16,7 +17,7 @@ export default function UsersPage() {
   const fetchUsers = async () => {
     setLoadingUsers(true);
     try {
-      const res = await fetch("http://localhost:5000/api/admin/users");
+      const res = await fetch(`${API_URL}/admin/users`);
       const data = await res.json();
       setUsers(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -29,7 +30,7 @@ export default function UsersPage() {
   const updateRole = async (clerkId, newRole) => {
     setUpdatingUserId(clerkId);
     try {
-      const res = await fetch("http://localhost:5000/api/admin/update-role", {
+      const res = await fetch(`${API_URL}/admin/update-role`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ clerkId, role: newRole }),

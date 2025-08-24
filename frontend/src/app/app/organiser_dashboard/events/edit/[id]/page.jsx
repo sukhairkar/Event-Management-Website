@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { API_URL } from "@/lib/apiurl";
 
 export default function EditEvent() {
   const { id } = useParams();
@@ -9,7 +10,7 @@ export default function EditEvent() {
   const [form, setForm] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/organiser/events/${id}`)
+    fetch(`${API_URL}/organiser/events/${id}`)
       .then((res) => res.json())
       .then((data) => setForm(data));
   }, [id]);
@@ -22,7 +23,7 @@ export default function EditEvent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch(
-      `http://localhost:5000/api/organiser/events/edit/${id}`,
+      `${API_URL}/organiser/events/edit/${id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
