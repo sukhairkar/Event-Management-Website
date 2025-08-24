@@ -11,6 +11,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import adminEventRoutes from "./routes/adminEventRoutes.js";
 import organiserEventRoutes from "./routes/organiserEventRoutes.js"; // ✅
 import announcementRoutes from "./routes/annoucementRoutes.js";
+import job from "./config/cron.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,6 +35,11 @@ app.use("/api/admin", express.json(), adminRoutes);
 app.use("/api/admin", express.json(), adminEventRoutes);
 app.use("/api/organiser", express.json(), organiserEventRoutes); // ✅ mount organiser routes
 app.use("/api/announcements",express.json(), announcementRoutes);
+app.use("/api/health", (req,res)=>{
+    res.status(200).json({status:"ok"})
+})
+
+if (process.env.NODE_ENV === "production") job.start();
 
 // Health check
 app.get("/", (req, res) => {
